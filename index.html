@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <title>Transit Pass</title>
     <style>
         :root {
-            --bg-color: #a53f66;
+            --card-bg: #a53f66;      /* Purple Card Color */
+            --page-bg: #ffffff;      /* White Outside Background */
             --yellow-text: #feff02;
             --button-color: #b19bd9;
-            --nav-bg: #FFFFFF;
             --nav-circle-active: #51D0C9;
         }
 
@@ -22,8 +22,8 @@
             padding: 0;
             width: 100%;
             height: 100%;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
+            font-family: -apple-system, sans-serif;
+            background-color: var(--page-bg); /* Sets the sides to white */
             overflow: hidden;
         }
 
@@ -32,29 +32,37 @@
             height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
         }
 
+        /* Top Bar with Icons on White Background */
         .header-controls {
             display: flex;
             justify-content: space-between;
-            padding: 15px 20px;
-            color: white;
-            font-size: 24px;
+            padding: 10px 20px;
+            color: #333; /* Dark icons for white background */
+            font-size: 28px;
+            background-color: var(--page-bg);
         }
 
-        .pass-content {
+        /* THE MAIN BOX: Adjust 'width' and 'margin-top' here */
+        .pass-card {
+            background-color: var(--card-bg);
+            width: 92%;               /* Adjust box width */
+            margin: 10px auto;        /* Centers the box */
+            border-radius: 24px;      /* Rounded corners for the box */
             flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
-            padding: 0 10px;
+            padding: 30px 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            color: white;
         }
 
-        .ride-count { font-size: 16px; margin-bottom: 10px; opacity: 0.9; color: white; }
-        .date { font-size: 30px; font-weight: 700; margin-bottom: 10px; color: white; }
-        .time { font-size: 42px; font-weight: 700; margin-bottom: 20px; letter-spacing: 1px; color: white; }
+        .ride-count { font-size: 16px; margin-bottom: 10px; opacity: 0.9; }
+        .date { font-size: 30px; font-weight: 700; margin-bottom: 10px; }
+        .time { font-size: 42px; font-weight: 700; margin-bottom: 20px; letter-spacing: 1px; }
         
         .agency {
             color: var(--yellow-text);
@@ -64,16 +72,14 @@
             margin-bottom: 20px;
         }
 
-        .route { font-size: 18px; margin-bottom: 20px; color: white; opacity: 0.9; }
+        .route { font-size: 18px; margin-bottom: 20px; opacity: 0.9; }
 
-        /* Seamless Video container */
+        /* Video stays contained in the box */
         .video-wrapper {
             width: 100%;
-            max-width: 400px;
             height: 180px;
             overflow: hidden;
-            border: none;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .bus-video {
@@ -86,23 +92,23 @@
             background-color: var(--button-color);
             color: white;
             border: none;
-            padding: 16px 80px;
-            border-radius: 40px;
-            font-size: 20px;
+            padding: 14px 70px;
+            border-radius: 30px;
+            font-size: 18px;
             font-weight: 600;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            margin-top: auto; /* Pushes button to bottom of card */
+            margin-bottom: 10px;
         }
 
-        /* Bottom Nav with SVGs */
+        /* White Bottom Nav */
         .bottom-nav {
-            background-color: var(--nav-bg);
-            height: 100px;
+            background-color: #ffffff;
+            height: 95px;
             display: flex;
             justify-content: space-around;
             align-items: center;
             padding-bottom: env(safe-area-inset-bottom);
-            border-top: 1px solid #eee;
+            border-top: 1px solid #f0f0f0;
         }
 
         .nav-item {
@@ -110,15 +116,15 @@
             flex-direction: column;
             align-items: center;
             font-size: 12px;
-            color: #333;
+            color: #000;
             gap: 5px;
         }
 
         .icon-circle {
-            width: 55px;
-            height: 55px;
+            width: 54px;
+            height: 54px;
             border-radius: 50%;
-            background-color: #f0f8f8;
+            background-color: #f2f9f9;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -126,17 +132,18 @@
 
         .active .icon-circle { background-color: var(--nav-circle-active); }
         .active .nav-svg { fill: white; }
-
-        .nav-svg { width: 28px; height: 28px; fill: #555; }
+        .nav-svg { width: 26px; height: 26px; fill: #444; }
     </style>
 </head>
 <body>
 
     <div class="app-container">
         <div class="header-controls">
-            <span>&#9776;</span> <span>&#8249;</span> </div>
+            <span>&#9776;</span> 
+            <span>&#8249;</span>
+        </div>
 
-        <div class="pass-content">
+        <div class="pass-card">
             <div class="ride-count">10 Ride Pass</div>
             <div id="live-date" class="date">---</div>
             <div id="live-clock" class="time">--:--:-- --</div>
@@ -155,27 +162,19 @@
 
         <nav class="bottom-nav">
             <div class="nav-item">
-                <div class="icon-circle">
-                    <svg class="nav-svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-                </div>
+                <div class="icon-circle"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></div>
                 Home
             </div>
             <div class="nav-item">
-                <div class="icon-circle">
-                    <svg class="nav-svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-                </div>
+                <div class="icon-circle"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div>
                 Parking
             </div>
             <div class="nav-item active">
-                <div class="icon-circle">
-                    <svg class="nav-svg" viewBox="0 0 24 24"><path d="M20 12c0-1.1-.9-2-2-2V7c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v3c-1.1 0-2 .9-2 2v5h2v2c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-2h4v2c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-2h2v-5zM8 7h8v3H8V7zm10 8H6v-3h12v3z"/></svg>
-                </div>
+                <div class="icon-circle"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M20 12c0-1.1-.9-2-2-2V7c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v3c-1.1 0-2 .9-2 2v5h2v2c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-2h4v2c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-2h2v-5zM8 7h8v3H8V7zm10 8H6v-3h12v3z"/></svg></div>
                 Transit
             </div>
             <div class="nav-item">
-                <div class="icon-circle">
-                    <svg class="nav-svg" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
-                </div>
+                <div class="icon-circle"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg></div>
                 Permits
             </div>
         </nav>
@@ -183,12 +182,11 @@
 
     <script>
         function updateClock() {
-            const clockElement = document.getElementById('live-clock');
-            const dateElement = document.getElementById('live-date');
+            const clock = document.getElementById('live-clock');
+            const date = document.getElementById('live-date');
             const now = new Date();
-            
-            clockElement.textContent = now.toLocaleTimeString('en-US', { hour12: true, hour: 'numeric', minute: '2-digit', second: '2-digit' });
-            dateElement.textContent = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: '2-digit', year: 'numeric' }).replace(/,/g, '');
+            clock.textContent = now.toLocaleTimeString('en-US', { hour12: true, hour: 'numeric', minute: '2-digit', second: '2-digit' });
+            date.textContent = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: '2-digit', year: 'numeric' }).replace(/,/g, '');
         }
         setInterval(updateClock, 1000);
         updateClock();
