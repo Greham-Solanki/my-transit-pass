@@ -1,0 +1,9 @@
+{
+  "short_name": "Transit",
+  "name": "Transit Pass",
+  "icons": [],
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff"
+}
