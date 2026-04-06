@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
     <title>Transit Pass</title>
     <style>
         :root {
@@ -35,11 +36,13 @@
         }
 
         /* Top Bar with Icons on White Background */
-        .header-controls {
+     .header-controls {
             display: flex;
             justify-content: space-between;
             padding: 10px 20px;
-            color: #333; /* Dark icons for white background */
+            /* This adds space for the iPhone Notch/Status Bar */
+            padding-top: calc(env(safe-area-inset-top) + 10px); 
+            color: #333;
             font-size: 28px;
             background-color: var(--page-bg);
         }
