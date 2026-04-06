@@ -3,107 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Peterborough Transit Pass</title>
+    <title>Transit Pass</title>
     <style>
         :root {
-            --bg-color: #9d375c;      /* Main background */
-            --yellow-text: #feff02;   /* Peterborough Transit text */
-            --button-color: #b19bd9;  /* Expire button */
-            
+            --bg-color: #a53f66;      /* Background from your request */
+            --yellow-text: #feff02;   /* Transit text color from your request */
+            --button-color: #b19bd9;  /* Expire button color from your request */
             --nav-bg: #FFFFFF;
             --nav-circle-inactive: #F2F9F9;
             --nav-circle-active: #51D0C9;
-            --nav-icon-inactive: #4A4A4A;
-            --nav-icon-active: #ffffff;
             --nav-text: #000000;
         }
 
-        body {
-            margin: 2;
-            padding: 2;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f5f5f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .app-container {
+        body, html {
+            margin: 0;
+            padding: 0;
             width: 100%;
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            overflow: hidden; /* Prevents accidental scrolling */
+        }
+
+        /* Container takes up the full mobile screen */
+        .app-container {
+            width: 100vw;
             height: 100vh;
-            max-width: 480px;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
-            background-color: var(--bg-color);
         }
 
         .pass-content {
-            flex-grow: 1;
+            flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-top: 40px;
+            padding-top: 20px;
             color: white;
             text-align: center;
         }
 
-        .ride-count { font-size: 16px; margin-bottom: 8px; font-weight: 400; opacity: 0.9; }
+        .ride-count { font-size: 16px; margin-top: 10px; margin-bottom: 5px; opacity: 0.9; }
         .date { font-size: 28px; font-weight: 700; margin-bottom: 15px; }
-        .time { font-size: 36px; font-weight: 700; margin-bottom: 20px; letter-spacing: 0.5px; }
+        .time { font-size: 38px; font-weight: 700; margin-bottom: 15px; letter-spacing: 1px; }
         
         .agency {
             color: var(--yellow-text);
-            font-size: 32px;
+            font-size: 34px;
             font-weight: 800;
             line-height: 1.1;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
-        .route { font-size: 18px; margin-bottom: 30px; font-weight: 400; opacity: 0.9; }
+        .route { font-size: 18px; margin-bottom: 20px; opacity: 0.9; }
 
-        /* Updated Video Section to match authentic proportions */
+        /* Seamless Video Section */
         .video-section {
-            width: 92%;               /* Leaves small gap on sides to match image_50 */
-            height: 190px;            /* Precise height for the bus animation */
+            width: 100%;
+            height: 200px;
             position: relative;
             overflow: hidden;
-            margin: 25px auto;        /* Centers it and adds top/bottom padding */
-            border: none;             /* Removes the border you wanted gone */
-            border-radius: 4px;       /* Subtle rounding seen in the original */
-            background-color: #a53f66; /* Set to match your main background color */
+            border: none; /* No border as requested */
+            background-color: var(--bg-color);
         }
 
         .bus-video {
             width: 100%;
             height: 100%;
-            object-fit: cover;        /* Prevents black bars/borders around the video */
-            display: block;
+            object-fit: cover;
         }
-        /* ---------------------------- */
 
         .expire-btn {
             background-color: var(--button-color);
             color: white;
             border: none;
-            padding: 14px 60px;
+            padding: 14px 0;
+            width: 60%;
+            max-width: 250px;
             border-radius: 30px;
             font-size: 18px;
             font-weight: 600;
-            cursor: pointer;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 20px 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
+        /* Bottom Nav */
         .bottom-nav {
             background-color: var(--nav-bg);
-            height: 100px;
+            height: 90px;
             display: flex;
             justify-content: space-around;
             align-items: center;
-            padding-bottom: 15px;
+            padding-bottom: env(safe-area-inset-bottom); /* Fix for iPhone notches */
         }
 
         .nav-item {
@@ -112,14 +108,14 @@
             align-items: center;
             text-decoration: none;
             color: var(--nav-text);
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 500;
-            gap: 8px;
+            gap: 5px;
         }
 
         .icon-circle {
-            width: 58px;
-            height: 58px;
+            width: 54px;
+            height: 54px;
             border-radius: 50%;
             background-color: var(--nav-circle-inactive);
             display: flex;
@@ -134,13 +130,7 @@
         .nav-icon {
             width: 28px;
             height: 28px;
-            stroke-width: 1.5;
-            stroke: var(--nav-icon-inactive);
-            fill: none;
         }
-
-        .nav-item.active .nav-icon { stroke: var(--nav-icon-active); }
-
     </style>
 </head>
 <body>
@@ -148,8 +138,8 @@
     <div class="app-container">
         <div class="pass-content">
             <div class="ride-count">10 Ride Pass</div>
-            <div class="date">Fri Feb 20 2026</div>
-            <div id="live-clock" class="time">7:40:47 PM</div>
+            <div id="live-date" class="date">Fri Feb 20 2026</div>
+            <div id="live-clock" class="time">7:40:47 AM</div>
             
             <div class="agency">Peterborough<br>Transit</div>
             <div class="route">Route 2 - Chemong</div>
@@ -163,35 +153,42 @@
             <button class="expire-btn">Expire</button>
         </div>
 
-        <div class="bottom-nav">
-            <a href="#" class="nav-item">
-                <div class="icon-circle"><svg class="nav-icon" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10l9-8 9 8v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z" /><rect x="10" y="13" width="4" height="8" /></svg></div>
+        <nav class="bottom-nav">
+            <div class="nav-item">
+                <div class="icon-circle"><img src="image_644d61.png" class="nav-icon"></div>
                 Home
-            </a>
-            <a href="#" class="nav-item">
-                <div class="icon-circle"><svg class="nav-icon" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M7 9 C 7 3.5, 17 3.5, 17 9 L 14.5 16 L 9.5 16 Z" /><rect x="11" y="16" width="2" height="6" fill="currentColor" stroke="none" /><text x="12" y="14" text-anchor="middle" font-family="sans-serif" font-weight="bold" font-size="5" fill="currentColor" stroke="none">P</text></svg></div>
+            </div>
+            <div class="nav-item">
+                <div class="icon-circle"><img src="image_644d86.png" class="nav-icon"></div>
                 Parking
-            </a>
-            <a href="#" class="nav-item active">
-                <div class="icon-circle"><svg class="nav-icon" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="14" rx="2" /><rect x="7" y="6" width="10" height="4" /><circle cx="8" cy="15" r="1.5" fill="currentColor" stroke="none" /><circle cx="16" cy="15" r="1.5" fill="currentColor" stroke="none" /><path d="M7 18v2M17 18v2M3 10h2M19 10h2" /></svg></div>
+            </div>
+            <div class="nav-item active">
+                <div class="icon-circle"><img src="image_644dbd.png" class="nav-icon" style="filter: brightness(0) invert(1);"></div>
                 Transit
-            </a>
-            <a href="#" class="nav-item">
-                <div class="icon-circle"><svg class="nav-icon" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2" /><circle cx="8" cy="10" r="2" /><path d="M5 15c0-1.5 1.5-3 3-3s3 1.5 3 3M13 9h6M13 12h6M13 15h4" /></svg></div>
+            </div>
+            <div class="nav-item">
+                <div class="icon-circle"><img src="image_644de2.png" class="nav-icon"></div>
                 Permits
-            </a>
-        </div>
+            </div>
+        </nav>
     </div>
 
     <script>
         function updateClock() {
             const clockElement = document.getElementById('live-clock');
+            const dateElement = document.getElementById('live-date');
             const now = new Date();
-            const timeString = now.toLocaleTimeString('en-US', { hour12: true, hour: 'numeric', minute: '2-digit', second: '2-digit' });
-            clockElement.textContent = timeString;
+            
+            clockElement.textContent = now.toLocaleTimeString('en-US', { 
+                hour12: true, hour: 'numeric', minute: '2-digit', second: '2-digit' 
+            });
+
+            dateElement.textContent = now.toLocaleDateString('en-US', {
+                weekday: 'short', month: 'short', day: '2-digit', year: 'numeric'
+            }).replace(/,/g, '');
         }
-        updateClock();
         setInterval(updateClock, 1000);
+        updateClock();
     </script>
 </body>
 </html>
