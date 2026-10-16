@@ -1,5 +1,5 @@
 // Transit Pass Service Worker
-const CACHE_NAME = 'transit-pass-v2';
+const CACHE_NAME = 'transit-pass-v3';
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
