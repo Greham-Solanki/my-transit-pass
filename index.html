@@ -41,13 +41,20 @@
 
         .header-controls {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 16px;
             padding: 10px 20px;
-            
+
             color: #333;
-            font-size: 28px;
+            font-size: 36px;              /* was 28px; try 32px to 44px */
             background-color: var(--page-bg);
             flex-shrink: 0;
+}
+
+        .header-controls span:last-child {
+            font-size: 1.3em;   /* 30% bigger than the header font size */
+            line-height: 1;
         }
 
         .pass-card {
